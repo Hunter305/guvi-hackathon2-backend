@@ -7,16 +7,17 @@ import {
   getEquipment,
   updateEquipment,
 } from "../controllers/equipmentController.js";
+import { verifyAdmin } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
 //CREATE
-router.post("/", createEquipment);
+router.post("/", verifyAdmin, createEquipment);
 //UPDATE
-router.put("/:id", updateEquipment);
+router.put("/:id", verifyAdmin, updateEquipment);
 
 //Delete
-router.delete("/:id", deleteEquipment);
+router.delete("/:id", verifyAdmin, deleteEquipment);
 
 //GET
 router.get("/:id", getEquipment);

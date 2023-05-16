@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
 import equipmentRoute from "./routes/equipments.js";
 import usersRoute from "./routes/users.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const port = 8080;
@@ -32,6 +33,7 @@ app.get("/", (req, res) => {
 
 //middleware
 
+app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/auth", authRoute);

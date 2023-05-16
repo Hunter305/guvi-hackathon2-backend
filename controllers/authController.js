@@ -1,8 +1,10 @@
 import User from "../models/Users.js";
 import bcrypt from "bcryptjs";
-
+import dotenv from "dotenv";
 import { createError } from "../utils/error.js";
 import jwt from "jsonwebtoken";
+
+dotenv.config();
 
 export const register = async (req, res, next) => {
   try {
@@ -33,9 +35,17 @@ export const login = async (req, res, next) => {
     if (!isPasswordCorrect)
       return next(createError(400, "wrong password or username"));
 
+    const token = jwt.sign(
+      { id: user._id, isAdmin: user.isAdmin },
+      process.env.JWT
+    );
+
     const { password, isAdmin, ...otherDetails } = user._doc;
 
-    res.status(200).json({ ...otherDetails });
+    res
+      .cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json({ ...otherDetails });
   } catch (err) {
     next(err);
   }
