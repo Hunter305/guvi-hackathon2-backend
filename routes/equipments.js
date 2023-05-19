@@ -1,6 +1,7 @@
 import express from "express";
 import Equipment from "../models/Equipment.js";
 import {
+  countByType,
   createEquipment,
   deleteEquipment,
   getAllEquipment,
@@ -20,9 +21,11 @@ router.put("/:id", verifyAdmin, updateEquipment);
 router.delete("/:id", verifyAdmin, deleteEquipment);
 
 //GET
-router.get("/:id", getEquipment);
+router.get("/find/:id", getEquipment);
 //GET ALL
 
 router.get("/", getAllEquipment);
+
+router.get("/countByType", countByType);
 
 export default router;

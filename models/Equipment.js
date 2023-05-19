@@ -6,8 +6,9 @@ const EquipmentSchema = new Schema({
   type: { type: String, required: true },
   photos: { type: [String] },
   description: { type: String, required: true },
+  longDescription:{type:String,required:true,default:"long description"},
   rating: { type: Number, min: 0, max: 5 },
-  feautured: { type: Boolean, required: false },
+  feautured: { type: Boolean, required: true,default:false },
   price: { type: Number, required: true },
 });
 

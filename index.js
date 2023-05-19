@@ -5,6 +5,7 @@ import authRoute from "./routes/auth.js";
 import equipmentRoute from "./routes/equipments.js";
 import usersRoute from "./routes/users.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express();
 const port = 8080;
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 
 //middleware
 
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 

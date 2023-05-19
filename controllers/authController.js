@@ -1,17 +1,16 @@
 import User from "../models/Users.js";
 import bcrypt from "bcryptjs";
-import dotenv from "dotenv";
 import { createError } from "../utils/error.js";
 import jwt from "jsonwebtoken";
 
-dotenv.config();
+
 
 export const register = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
     const newUser = new User({
-      userName: req.body.userName,
+      username: req.body.username,
       email: req.body.email,
       password: hash,
     });
@@ -25,7 +24,7 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
-    const user = await User.findOne({ userName: req.body.userName });
+    const user = await User.findOne({ username: req.body.username });
     if (!user) return next(createError(404, "user not found"));
 
     const isPasswordCorrect = await bcrypt.compare(

@@ -45,9 +45,32 @@ export const getEquipment = async (req, res, next) => {
 };
 
 export const getAllEquipment = async (req, res, next) => {
+
+  const {min,max,...other} =req.query
+
   try {
-    const equipments = await Equipment.find();
+    const equipments = await Equipment.find({...other,price:{$gt: min || 1, $lt:max || 999}}).limit(req.query.limit);
     res.status(200).json(equipments);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const countByType = async (req, res, next) => {
+  try {
+    const electronicsCount = await Equipment.countDocuments({
+      type: "electronics",
+    });
+    const furnitureCount = await Equipment.countDocuments({
+      type: "furniture",
+    });
+    const hardwareCount = await Equipment.countDocuments({ type: "hardware" });
+
+    res.status(200).json([
+      { type: "electronics", count: electronicsCount },
+      { type: "furniture", count: furnitureCount },
+      { type: "hardware", count: hardwareCount },
+    ]);
   } catch (error) {
     next(error);
   }

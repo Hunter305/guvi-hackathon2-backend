@@ -14,7 +14,6 @@ router.get("/checkauthentication", verifyToken, (req, res, next) => {
 });
 
 router.get("/checkuser/:id", verifyUser, (req, res, next) => {
-  console.log(req.params.id);
   res.send("hello user, you are logged in and you can delete your account");
 });
 
